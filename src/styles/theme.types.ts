@@ -3,52 +3,25 @@ import { Getters } from "@globalTypes/shared.types";
 
 export const themeVariantsNames = ["mainTheme", "secondaryTheme"] as const;
 export const colorNames = [
-  "sidebarTabsPressed",
-  "blueDark",
-  "blueLight",
-  "orangeLight",
-  "orangeDark",
-  "light",
-  "greyLight",
-  "greyDark",
-  "greenLight",
-  "greenDark",
-  "redLight",
-  "sidebarTabs",
-  "redDark",
-  "sidebar",
-  "footer",
+  "red",
+  "black",
   "white",
-  "inputGrey",
-  "widgetsShadows",
+  "white_50",
+  "background",
   "text",
-  "yellow",
+  "text_addition",
+  "sidebar_selected",
+  "sidebar_grayedOut",
+  "list_background",
 ] as const;
 
 export const typographyNames = [
-  "header1",
-  "header2",
-  "subtitles",
-  "header3",
-  "header4",
-  "header5",
-  "subHeader",
   "paragraph",
-  "dataInputsAndTooltips",
-  "underlined",
-  "captions",
+  "subtitle_2",
+  "button_normal",
 ] as const;
 
-const typographyTypes = [
-  "p",
-  "span",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-] as const;
+const typographyTypes = ["p", "span", "h1", "h2", "h3", "h4", "h5"] as const;
 
 export type ColorNames = (typeof colorNames)[number];
 export type ThemeName = (typeof themeVariantsNames)[number];
