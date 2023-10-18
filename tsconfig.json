@@ -21,7 +21,8 @@
       "@styles/*": ["src/styles/*"],
       "@globalTypes/*": ["src/types/*"],
       "@store/*": ["src/store/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@routing/*": ["src/routing/*"]
     }
   },
   "include": ["src", "index.d.ts"]

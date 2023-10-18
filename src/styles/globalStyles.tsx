@@ -5,11 +5,14 @@ html, #root, body{
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 html, body {
+    background-color: ${({ theme }) => theme.palette.background};
+    padding: 16px;
     height: 100%;
+    display:flex;
 }
 
 *, *:before, *:after {

@@ -1,13 +1,19 @@
-import Icon from "./components/Icon";
+import styled from "styled-components";
+import Sidebar from "./components/Sidebar";
 import GlobalStyle from "./styles/globalStyles";
+
+const Layout = styled.div`
+  height: 100%;
+  display: flex;
+`;
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <main className="App">
-        APP <Icon color="red" isActive={false} name={"acmeLogo"} size={90} />
-      </main>
+      <Layout>
+        <Sidebar />
+      </Layout>
     </>
   );
 }

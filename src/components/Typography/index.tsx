@@ -1,4 +1,4 @@
-import { CSSProperties, PropsWithChildren, useContext } from "react";
+import { CSSProperties, PropsWithChildren } from "react";
 import { TypographyProps } from "./Typography.types";
 import variantToElement from "./Typography.utils";
 import { useTheme } from "styled-components";
