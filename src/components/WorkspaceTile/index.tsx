@@ -2,48 +2,58 @@ import { useState } from "react";
 import * as Styled from "./WorkspaceTile.styled";
 import Icon from "../Icon";
 import { Workspace } from "../../store/reducers/user_slice/user_slice.types";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   changeCurrentWorkspace,
-  selectUserCurrentWorkspace,
-  selectUserWorkspaces,
+  deleteWorkspace,
+  editWorkspace,
 } from "../../store/reducers/user_slice";
+import { useAppDispatch } from "../../store/hooks";
 import EditableTextInput from "../../components/Input";
+import useOnHover from "../../utils/hooks/useOnHover";
 
 type WorkspaceTileProps = {
   workspace: Omit<Workspace, "lists">;
-} & { isCreated: boolean };
+  isCreated: boolean;
+  isCurrent: boolean;
+  onClick?: () => void;
+};
 
-const WorkspaceTile = ({ workspace, isCreated }: WorkspaceTileProps) => {
-  const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
-  const workspaces = useAppSelector(selectUserWorkspaces);
+const WorkspaceTile = ({
+  workspace,
+  isCreated,
+  onClick = () => {},
+  isCurrent,
+}: WorkspaceTileProps) => {
   const dispatch = useAppDispatch();
+  const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();
+  const [inputText, setInputText] = useState("");
   const { name, id, icon } = workspace;
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
+  const getCurrentName = (name: string) => {
+    setInputText(name);
   };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+  const onClickHandler = () => {
+    onClick();
   };
 
-  const changeWorkspaceHandler = () => {
-    dispatch(changeCurrentWorkspace({ id }));
+  const onSaveHandler = () => {
+    dispatch(editWorkspace({ id, newName: inputText }));
   };
 
-  const isThisCurrentWorkspace = id === currentWorkspace?.id ? true : false;
-  const isBeingCreated = id === workspaces.length - 1 + "" ? isCreated : false;
+  const onDeleteHandler = () => {
+    const newCurrentWorkspaceId = +id - 1 + "";
+    dispatch(deleteWorkspace({ id }));
+    dispatch(changeCurrentWorkspace({ id: newCurrentWorkspaceId }));
+  };
 
   return (
     <Styled.WorkspaceWrapper
-      isCurrentWorkspace={isThisCurrentWorkspace}
-      isBeingCreated={isBeingCreated}
-      onClick={changeWorkspaceHandler}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      isCurrentWorkspace={isCurrent}
+      isBeingCreated={isCreated}
+      onClick={onClickHandler}
+      onMouseEnter={mouseEnterHandler}
+      onMouseLeave={mouseLeaveHandler}
     >
       <Styled.WorkspaceContainer>
         <Styled.LogoContainer bckgColor={icon.backgroundColors}>
@@ -56,8 +66,10 @@ const WorkspaceTile = ({ workspace, isCreated }: WorkspaceTileProps) => {
         </Styled.LogoContainer>
         <EditableTextInput
           name={name}
-          typographyVariant="subtitle_2"
+          getCurrentName={getCurrentName}
           isHovered={isHovered}
+          onDelete={onDeleteHandler}
+          onSave={onSaveHandler}
         />
       </Styled.WorkspaceContainer>
     </Styled.WorkspaceWrapper>

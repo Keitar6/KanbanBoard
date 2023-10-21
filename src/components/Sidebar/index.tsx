@@ -4,7 +4,6 @@ import SidebarItem from "../SidebarItem";
 import { sidebarLinks, sidebarItemInfo } from "./Sidebar.utils";
 import UserTile from "../UserTile";
 import WorkspaceSection from "../WorkspaceSection";
-import EditableTextInput from "../../components/Input";
 
 const Sidebar = () => {
   const { icon, label, link } = sidebarItemInfo;

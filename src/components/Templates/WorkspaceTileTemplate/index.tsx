@@ -1,5 +1,5 @@
 import * as Styled from "./WorkspaceTileTemplate.styled";
-import EditableTextInput from "../Input";
+import EditableTextInput from "../../Input";
 
 type WorkspaceTileProps = {
   isCreating: boolean;
@@ -20,6 +20,7 @@ const WorkspaceTileTemplate = ({
         <Styled.LogoContainer />
         <EditableTextInput
           name=""
+          placeholder="Workspace name"
           typographyVariant="subtitle_2"
           isCreating={isCreating}
           isHovered={false}

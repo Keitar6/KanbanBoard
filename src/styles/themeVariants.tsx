@@ -18,6 +18,8 @@ const mainTheme: Theme = {
     tiles_hover: "#12033e",
     list_background: "#ECF1FD",
 
+    card_hover: "#F8FAFF",
+
     logo_template: "#B3C4D6",
 
     midnight_blue_200: "#D0CDD8",
@@ -64,6 +66,8 @@ const secondaryTheme: Theme = {
 
     tiles_hover: "#12033e",
     list_background: "#ECF1FD",
+
+    card_hover: "#F8FAFF",
 
     logo_template: "#B3C4D6",
 

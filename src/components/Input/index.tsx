@@ -1,10 +1,5 @@
 import Icon from "../Icon";
 import Typography from "../Typography";
-import { useAppDispatch } from "../../store/hooks";
-import {
-  deleteWorkspace,
-  editWorkspace,
-} from "../../store/reducers/user_slice";
 import { TypographyName } from "../../styles/theme.types";
 import { useState } from "react";
 import { useTheme } from "styled-components";
@@ -15,7 +10,10 @@ type EditableTextInputProps = {
   isCreating?: boolean;
   typographyVariant?: TypographyName;
   name: string;
+  placeholder?: string;
   getCurrentName?: (name: string) => void;
+  onDelete?: (id?: string) => void;
+  onSave?: () => void;
 };
 
 function EditableTextInput({
@@ -23,13 +21,14 @@ function EditableTextInput({
   isCreating = false,
   typographyVariant = "paragraph",
   name,
+  placeholder = "placeholder",
   getCurrentName = () => {},
+  onDelete = () => {},
+  onSave = () => {},
 }: EditableTextInputProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(name);
   const { typography } = useTheme();
-
-  const dispatch = useAppDispatch();
 
   const editClickHandler = () => {
     setIsEditing((prevIsEditing) => !prevIsEditing);
@@ -37,7 +36,7 @@ function EditableTextInput({
 
   const saveClickHandler = () => {
     setIsEditing(false);
-    dispatch(editWorkspace({ name, newName: text }));
+    onSave();
   };
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentText = e.target.value;
@@ -45,8 +44,18 @@ function EditableTextInput({
     getCurrentName(currentText);
   };
 
-  const deleteWorkspaceHandler = () => {
-    dispatch(deleteWorkspace({ name }));
+  const deletetionHandler = () => {
+    onDelete();
+  };
+
+  const onEnterHandler = (
+    e: React.KeyboardEvent<HTMLInputElement> & { target: { value: string } }
+  ) => {
+    if (e.code === "Enter") {
+      setIsEditing(false);
+      getCurrentName(e.target.value);
+      onSave();
+    }
   };
 
   return (
@@ -54,11 +63,12 @@ function EditableTextInput({
       {isCreating || isEditing ? (
         <Styled.InputContainer>
           <Styled.CustomInput
-            placeholder="Workspace name"
+            placeholder={placeholder}
             type="text"
             value={text}
-            onChange={onChangeHandler}
             style={typography[typographyVariant]}
+            onChange={onChangeHandler}
+            onKeyDown={onEnterHandler}
           />
 
           {isHovered ? (
@@ -71,7 +81,7 @@ function EditableTextInput({
                   isActive={false}
                 />
               </Styled.StyledButton>
-              <Styled.StyledButton onClick={deleteWorkspaceHandler}>
+              <Styled.StyledButton onClick={deletetionHandler}>
                 <Icon
                   size={16}
                   name={"trashBin"}
@@ -91,7 +101,7 @@ function EditableTextInput({
               <Styled.StyledButton onClick={editClickHandler}>
                 <Icon size={16} name={"edit"} color={"text"} isActive={false} />
               </Styled.StyledButton>
-              <Styled.StyledButton onClick={deleteWorkspaceHandler}>
+              <Styled.StyledButton onClick={deletetionHandler}>
                 <Icon
                   size={16}
                   name={"trashBin"}

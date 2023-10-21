@@ -10,6 +10,7 @@ import { selectError } from "./store/reducers/error_slice";
 const Layout = styled.div`
   height: 100%;
   display: flex;
+  gap: 24px;
 `;
 
 function App() {

@@ -18,6 +18,8 @@ export const colorNames = [
   "tiles_hover",
   "list_background",
 
+  "card_hover",
+
   "logo_template",
 
   "midnight_blue_200",
