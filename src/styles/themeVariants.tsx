@@ -13,8 +13,17 @@ const mainTheme: Theme = {
 
     sidebar_selected: "#007DFC",
     sidebar_grayedOut: "#B7BEC5",
+    sidebar_breakdown_line: "#E4E9F3",
 
+    tiles_hover: "#12033e",
     list_background: "#ECF1FD",
+
+    logo_template: "#B3C4D6",
+
+    midnight_blue_200: "#D0CDD8",
+    midnight_blue_300: "#B8B3C5",
+    midnight_blue_500: "#88819F",
+    midnight_blue_700: "#594F78",
   },
   typography: {
     subtitle_2: {
@@ -37,6 +46,7 @@ const mainTheme: Theme = {
     },
   },
 };
+
 const secondaryTheme: Theme = {
   palette: {
     white: "#ffffff",
@@ -50,8 +60,17 @@ const secondaryTheme: Theme = {
 
     sidebar_selected: "#007DFC",
     sidebar_grayedOut: "#B7BEC5",
+    sidebar_breakdown_line: "#E4E9F3",
 
+    tiles_hover: "#12033e",
     list_background: "#ECF1FD",
+
+    logo_template: "#B3C4D6",
+
+    midnight_blue_200: "#D0CDD8",
+    midnight_blue_300: "#B8B3C5",
+    midnight_blue_500: "#88819F",
+    midnight_blue_700: "#594F78",
   },
   typography: {
     subtitle_2: {

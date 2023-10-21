@@ -18,14 +18,12 @@ const Icon = ({
   const icon: IconItem = getIcon(name);
   const { palette } = useTheme();
 
-  const getFillColor = (isPathFill: boolean | undefined) => {
-    if (isPathFill) {
-      return isActive
-        ? palette[activeColor as keyof PaletteType]
-        : palette[color as keyof PaletteType];
-    }
-    return undefined;
-  };
+  const getFillColor = () =>
+    isActive
+      ? palette[activeColor as keyof PaletteType]
+      : palette[color as keyof PaletteType];
+
+  const fillColor = getFillColor();
 
   return (
     <svg
@@ -33,7 +31,7 @@ const Icon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      fill="none"
+      fill={fillColor}
       data-testid={`${name}-icon`}
     >
       <mask id={`mask-${name}`} fill={icon.mask?.fill}>
@@ -52,15 +50,11 @@ const Icon = ({
         <path
           key={`path-${p.id}`}
           d={p.d}
-          stroke={
-            isActive
-              ? palette[activeColor as keyof PaletteType]
-              : palette[color as keyof PaletteType]
-          }
+          stroke={fillColor}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={p.strokeWidth}
-          fill={getFillColor(p.isPathFill)}
+          fill={fillColor}
           mask={p.isMask ? `url(#mask-${name})` : undefined}
         />
       ))}

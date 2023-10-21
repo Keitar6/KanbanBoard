@@ -10,9 +10,20 @@ export const colorNames = [
   "background",
   "text",
   "text_addition",
+
   "sidebar_selected",
   "sidebar_grayedOut",
+  "sidebar_breakdown_line",
+
+  "tiles_hover",
   "list_background",
+
+  "logo_template",
+
+  "midnight_blue_200",
+  "midnight_blue_300",
+  "midnight_blue_500",
+  "midnight_blue_700",
 ] as const;
 
 export const typographyNames = [
@@ -31,7 +42,7 @@ export type PaletteType = Getters<ColorNames, HexColor>;
 
 export type TypographyName = (typeof typographyNames)[number];
 
-type TypographyTypes = (typeof typographyTypes)[number];
+export type TypographyTypes = (typeof typographyTypes)[number];
 
 export type TypographyVariants = { [key in TypographyName]: TypographyTypes };
 

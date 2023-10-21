@@ -9,7 +9,10 @@ export const iconsNames = [
   "edit",
   "trashBin",
   "plus",
+  "tick",
+  "save",
   "gear",
+  "defaultLogo",
   "acmeLogo",
 ] as const;
 

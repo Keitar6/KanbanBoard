@@ -6,10 +6,12 @@ import {
 import { CurriedGetDefaultMiddleware } from "@reduxjs/toolkit/dist/getDefaultMiddleware";
 import loggerMiddleware from "redux-logger";
 
-import { buildingReducer } from "./reducers/global_slice";
+import { userReducer } from "./reducers/user_slice";
+import { errorReducer } from "./reducers/error_slice";
 
 export const rootReducer = combineReducers({
-  building: buildingReducer,
+  user: userReducer,
+  error: errorReducer,
 });
 
 export const rootMiddleware = (
