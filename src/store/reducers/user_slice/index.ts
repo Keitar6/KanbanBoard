@@ -94,7 +94,7 @@ export const UserSlice = createSlice({
       state.boards.workspaces.push({
         ...action.payload,
         id,
-        lists: emptyLists,
+        lists: [],
       });
       state.boards.currentWorkspace = id;
     },
