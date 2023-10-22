@@ -1,73 +1,26 @@
-import { BaseButtonProps } from "@components/Button";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import {
-  addNewWorkspace,
   changeCurrentWorkspace,
-  selectUserCurrentWorkspace,
-  selectUserWorkspaces,
+  deleteWorkspace,
 } from "../../store/reducers/user_slice";
-import { Workspace } from "../../store/reducers/user_slice/user_slice.types";
-import { useState } from "react";
+import useOnHover from "./useOnHover";
 
-const useWorkspace = () => {
+const useWorkspace = (id: string) => {
   const dispatch = useAppDispatch();
-  const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
-  const workspaces = useAppSelector(selectUserWorkspaces);
-  const [buttonState, setButtonState] = useState<BaseButtonProps>({
-    type: "basic",
-    inactive: false,
-  });
-  const [isWorkspaceBeingCreated, setIsWorkspaceBeingCreated] =
-    useState<boolean>(false);
-  const [newWorkspaceName, setNewWorkspaceName] = useState("");
 
-  const canBeSaved = !buttonState.inactive;
+  const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();
 
-  const getCurrentName = (name: string) => {
-    if (name) {
-      setButtonState({ type: "primary", inactive: false });
-      setNewWorkspaceName(name);
-    } else setButtonState({ type: "primary", inactive: true });
-  };
-
-  const addNewWorkspaceHandler = () => {
-    if (!isWorkspaceBeingCreated) {
-      setButtonState({ type: "primary", inactive: true });
-      setIsWorkspaceBeingCreated(true);
-    } else if (isWorkspaceBeingCreated && canBeSaved) {
-      const newWorkspace: Omit<Omit<Workspace, "lists">, "id"> = {
-        name: newWorkspaceName,
-        icon: {
-          name: "defaultLogo",
-          color: "text",
-          backgroundColors: "logo_template",
-        },
-      };
-
-      dispatch(addNewWorkspace(newWorkspace));
-      setButtonState({ type: "basic", inactive: false });
-      setIsWorkspaceBeingCreated(false);
-    }
-  };
-
-  const changeWorkspaceHandler = ({
-    workspaceId,
-    condition = true,
-  }: {
-    workspaceId: string;
-    condition?: boolean;
-  }) => {
-    if (condition) dispatch(changeCurrentWorkspace({ id: workspaceId }));
+  const onDeleteHandler = () => {
+    const newCurrentWorkspaceId = +id - 1 + "";
+    dispatch(deleteWorkspace({ id }));
+    dispatch(changeCurrentWorkspace({ id: newCurrentWorkspaceId }));
   };
 
   return {
-    addNewWorkspaceHandler,
-    changeWorkspaceHandler,
-    getCurrentName,
-    currentWorkspace,
-    workspaces,
-    isWorkspaceBeingCreated,
-    buttonState,
+    onDeleteHandler,
+    isHovered,
+    mouseEnterHandler,
+    mouseLeaveHandler,
   };
 };
 

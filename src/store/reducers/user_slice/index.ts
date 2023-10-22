@@ -11,6 +11,9 @@ import {
   AddNewSubCardAction,
   AddNewWorkspaceAction,
   ChangeCurrentWorkspaceAction,
+  ChangePositionOfACardAction,
+  ChangePositionOfAListAction,
+  ChangePositionOfAWorkspaceAction,
   DeleteCardAction,
   DeleteListAction,
   DeleteSubCardAction,
@@ -89,7 +92,6 @@ export const UserSlice = createSlice({
     addNewWorkspace: (state, action: AddNewWorkspaceAction) => {
       const { workspaces } = state.boards;
       const idsArray = workspaces.map((space) => +space.id).sort();
-
       const id = idsArray[idsArray.length - 1] + 1 + "";
       state.boards.workspaces.push({
         ...action.payload,
@@ -122,8 +124,13 @@ export const UserSlice = createSlice({
       const { id } = action.payload;
       state.boards.currentWorkspace = id;
     },
-    changePositionOfAWorkspace: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    changePositionOfAWorkspace: (
+      state,
+      action: ChangePositionOfAWorkspaceAction
+    ) => {
+      const { reorderdWorkspaces } = action.payload;
+
+      state.boards.workspaces = reorderdWorkspaces;
     },
     //-----------------------------------------------------------
 
@@ -159,8 +166,12 @@ export const UserSlice = createSlice({
 
       workspaces[+currentWorkspace].lists[index].name = newName;
     },
-    changePositionOfAList: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+
+    changePositionOfAList: (state, action: ChangePositionOfAListAction) => {
+      const { reorderdList } = action.payload;
+      const { currentWorkspace } = state.boards;
+
+      state.boards.workspaces[+currentWorkspace].lists = reorderdList;
     },
     //-----------------------------------------------------------
 
@@ -205,11 +216,18 @@ export const UserSlice = createSlice({
         (cardList) => id === cardList.id
       );
 
-      workspaces[+currentWorkspace].lists[listIndex].cards[index].name =
-        newName;
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards[
+        index
+      ].name = newName;
     },
-    changePositionOfACard: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    changePositionOfACard: (state, action: ChangePositionOfACardAction) => {
+      const { reorderdCardList, listId } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards =
+        reorderdCardList;
     },
     //-----------------------------------------------------------
 

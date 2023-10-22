@@ -51,7 +51,9 @@ export type EditWorkspaceAction = PayloadAction<{
 export type ChangeCurrentWorkspaceAction = PayloadAction<{
   id: string;
 }>;
-export type NotImplementedYetProps = any;
+export type ChangePositionOfAWorkspaceAction = PayloadAction<{
+  reorderdWorkspaces: Workspace[];
+}>;
 
 export type AddNewListAction = PayloadAction<{
   name: string;
@@ -62,6 +64,9 @@ export type DeleteListAction = PayloadAction<{
 export type EditListAction = PayloadAction<{
   id: string;
   newName: string;
+}>;
+export type ChangePositionOfAListAction = PayloadAction<{
+  reorderdList: List[];
 }>;
 
 export type AddNewCardAction = PayloadAction<{
@@ -94,3 +99,10 @@ export type EditSubCardAction = PayloadAction<{
   id: string;
   newName: string;
 }>;
+
+export type ChangePositionOfACardAction = PayloadAction<{
+  reorderdCardList: Card[];
+  listId: string;
+}>;
+
+export type NotImplementedYetProps = any;

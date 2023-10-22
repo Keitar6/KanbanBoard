@@ -1,49 +1,40 @@
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
-  addNewList,
+  deleteList,
+  editList,
   selectUserCurrentWorkspace,
 } from "../../store/reducers/user_slice";
-import { List } from "../../store/reducers/user_slice/user_slice.types";
 import { useState } from "react";
+import useOnHover from "./useOnHover";
 
-const useList = () => {
+const useList = (listId: string) => {
   const dispatch = useAppDispatch();
   const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
+  const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();
 
-  const [isListBeingCreated, setIsListBeingCreated] = useState<boolean>(false);
   const [newListName, setNewListName] = useState("");
 
-  const canBeSaved = false;
-
-  const getCurrentName = (name: string) => {
+  const getEditedListName = (name: string) => {
     setNewListName(name);
   };
 
-  const addNewListHandler = () => {
-    if (!isListBeingCreated) {
-      setIsListBeingCreated(true);
-    } else if (isListBeingCreated && canBeSaved) {
-      const newList: Omit<List, "id"> = {
-        name: newListName,
-        cards: [],
-      };
-
-      dispatch(addNewList(newList));
-      setIsListBeingCreated(false);
-    }
+  const onEditHandler = () => {
+    if (newListName) dispatch(editList({ newName: newListName, id: listId }));
   };
 
-  const onSaveHandler = () => {
-    dispatch(addNewList({ name: newListName }));
-    setIsListBeingCreated(false);
+  const onDeleteListHandler = () => {
+    dispatch(deleteList({ id: listId }));
   };
 
   return {
-    addNewListHandler,
-    getCurrentName,
-    onSaveHandler,
+    getEditedListName,
+    onEditHandler,
+    onDeleteListHandler,
     currentWorkspace,
-    isListBeingCreated,
+    listId,
+    isHovered,
+    mouseEnterHandler,
+    mouseLeaveHandler,
   };
 };
 
