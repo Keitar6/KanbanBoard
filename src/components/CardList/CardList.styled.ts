@@ -20,3 +20,12 @@ export const Content = styled.div`
   gap: 8px;
   width: 100%;
 `;
+
+export const AddACardButton = styled.button`
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+`;

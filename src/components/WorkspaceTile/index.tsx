@@ -1,78 +1,70 @@
-import { useState } from "react";
 import * as Styled from "./WorkspaceTile.styled";
 import Icon from "../Icon";
 import { Workspace } from "../../store/reducers/user_slice/user_slice.types";
-import {
-  changeCurrentWorkspace,
-  deleteWorkspace,
-  editWorkspace,
-} from "../../store/reducers/user_slice";
-import { useAppDispatch } from "../../store/hooks";
 import EditableTextInput from "../../components/Input";
-import useOnHover from "../../utils/hooks/useOnHover";
+import useWorkspace from "../../utils/hooks/useWorkspace";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type WorkspaceTileProps = {
   workspace: Omit<Workspace, "lists">;
   isCreated: boolean;
   isCurrent: boolean;
   onClick?: () => void;
+  onSave?: () => void;
 };
 
 const WorkspaceTile = ({
   workspace,
   isCreated,
-  onClick = () => {},
   isCurrent,
+  onClick = () => {},
+  onSave = () => {},
 }: WorkspaceTileProps) => {
-  const dispatch = useAppDispatch();
-  const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();
-  const [inputText, setInputText] = useState("");
   const { name, id, icon } = workspace;
+  const { isHovered, mouseEnterHandler, mouseLeaveHandler, onDeleteHandler } =
+    useWorkspace(id);
 
-  const getCurrentName = (name: string) => {
-    setInputText(name);
-  };
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
 
-  const onClickHandler = () => {
-    onClick();
-  };
-
-  const onSaveHandler = () => {
-    dispatch(editWorkspace({ id, newName: inputText }));
-  };
-
-  const onDeleteHandler = () => {
-    const newCurrentWorkspaceId = +id - 1 + "";
-    dispatch(deleteWorkspace({ id }));
-    dispatch(changeCurrentWorkspace({ id: newCurrentWorkspaceId }));
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
   };
 
   return (
-    <Styled.WorkspaceWrapper
-      isCurrentWorkspace={isCurrent}
-      isBeingCreated={isCreated}
-      onClick={onClickHandler}
-      onMouseEnter={mouseEnterHandler}
-      onMouseLeave={mouseLeaveHandler}
+    <Styled.WorkspaceDraggable
+      style={style}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
     >
-      <Styled.WorkspaceContainer>
-        <Styled.LogoContainer bckgColor={icon.backgroundColors}>
-          <Icon
-            color={icon.color}
-            name={icon.name}
-            size={icon.name !== "defaultLogo" ? 19.2 : 9}
-            isActive={false}
+      <Styled.WorkspaceWrapper
+        isCurrentWorkspace={isCurrent}
+        isBeingCreated={isCreated}
+        onClick={onClick}
+        onMouseEnter={mouseEnterHandler}
+        onMouseLeave={mouseLeaveHandler}
+      >
+        <Styled.WorkspaceContainer>
+          <Styled.LogoContainer bckgColor={icon.backgroundColors}>
+            <Icon
+              color={icon.color}
+              name={icon.name}
+              size={icon.name !== "defaultLogo" ? 19.2 : 9}
+              isActive={false}
+            />
+          </Styled.LogoContainer>
+          <EditableTextInput
+            name={name}
+            isHovered={isHovered}
+            onDelete={onDeleteHandler}
+            onSave={onSave}
           />
-        </Styled.LogoContainer>
-        <EditableTextInput
-          name={name}
-          getCurrentName={getCurrentName}
-          isHovered={isHovered}
-          onDelete={onDeleteHandler}
-          onSave={onSaveHandler}
-        />
-      </Styled.WorkspaceContainer>
-    </Styled.WorkspaceWrapper>
+        </Styled.WorkspaceContainer>
+      </Styled.WorkspaceWrapper>
+    </Styled.WorkspaceDraggable>
   );
 };
 

@@ -38,3 +38,11 @@ export const LogoContainer = styled.section<{ bckgColor: ColorNames }>`
   background-color: ${({ bckgColor, theme }) => theme.palette[bckgColor]};
   border-radius: 0.5rem;
 `;
+
+export const WorkspaceDraggable = styled.section`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+`;
