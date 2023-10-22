@@ -1,14 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-  addNewCard,
-  addNewSubCard,
-  deleteCard,
-  deleteSubCard,
-  editCard,
-  editSubCard,
-  selectUserCurrentWorkspace,
-  selectUserWorkspaces,
-} from "../../store/reducers/user_slice";
+import { useAppDispatch } from "../../store/hooks";
+import { addNewSubCard } from "../../store/reducers/user_slice";
 import { useState } from "react";
 
 const useNewSubCard = ({

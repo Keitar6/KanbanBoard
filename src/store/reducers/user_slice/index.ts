@@ -4,7 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import type { RootState } from "@store/store";
-import { emptyCardList, emptyLists, emptySubCardList } from "../../utils";
+import { emptyCardList, emptySubCardList } from "../../utils";
 import {
   AddNewCardAction,
   AddNewListAction,
@@ -23,7 +23,6 @@ import {
   EditListAction,
   EditSubCardAction,
   EditWorkspaceAction,
-  NotImplementedYetProps,
 } from "./user_slice.types";
 import { UserState } from "./user_slice.types";
 import JohnDoeImage from "../../../assets/photos/JohnDoeAvatar.png";

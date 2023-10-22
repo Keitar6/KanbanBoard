@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { SidebarDropShadow } from "../Sidebar/Sidebar.styled";
 
 export const WorkspacesContainer = styled.section`
   display: flex;

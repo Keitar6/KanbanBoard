@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 html, #root, body{
@@ -38,4 +38,3 @@ ol, ul, li {
 `;
 
 export default GlobalStyle;
-

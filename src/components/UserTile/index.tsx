@@ -14,7 +14,7 @@ const UserTile = () => {
     <Styled.User>
       <Styled.UserProfile>
         <Styled.ImageContainer>
-          <img src={image} />
+          <img alt="Users Profile" src={image} />
         </Styled.ImageContainer>
         <Typography variant="subtitle_2">{fullName}</Typography>
       </Styled.UserProfile>

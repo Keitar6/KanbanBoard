@@ -1,9 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   addNewCard,
-  deleteCard,
   deleteSubCard,
-  editCard,
   editSubCard,
   selectUserCurrentWorkspace,
   selectUserWorkspaces,
