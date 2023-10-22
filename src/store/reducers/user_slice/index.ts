@@ -4,18 +4,27 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import type { RootState } from "@store/store";
-import { emptyLists } from "../../utils";
+import { emptyCardList, emptyLists, emptySubCardList } from "../../utils";
 import {
+  AddNewCardAction,
+  AddNewListAction,
+  AddNewSubCardAction,
   AddNewWorkspaceAction,
   ChangeCurrentWorkspaceAction,
+  DeleteCardAction,
+  DeleteListAction,
+  DeleteSubCardAction,
   DeleteWorkspaceAction,
+  EditCardAction,
+  EditListAction,
+  EditSubCardAction,
   EditWorkspaceAction,
   NotImplementedYetProps,
 } from "./user_slice.types";
-import { UserStates } from "./user_slice.types";
+import { UserState } from "./user_slice.types";
 import JohnDoeImage from "../../../assets/photos/JohnDoeAvatar.png";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: UserState = {
   id: "1",
   personalInformations: {
     name: { firstName: "John", LastName: "Doe" },
@@ -31,10 +40,36 @@ const INITIAL_STATE = {
           color: "white",
           backgroundColors: "sidebar_selected",
         },
-        lists: {
-          name: "Working on",
-          cards: { name: "Create Video for Acme", subCards: ["Siubidubi"] },
-        },
+        lists: [
+          {
+            id: "0",
+            name: "Working on",
+            cards: [
+              {
+                id: "0",
+                name: "Create Video for Acme",
+                subCards: [
+                  { name: "Siubidubi", id: "0" },
+                  { name: "Can dance dance", id: "1" },
+                ],
+              },
+            ],
+          },
+          {
+            id: "1",
+            name: "Working on",
+            cards: [
+              {
+                id: "1",
+                name: "Create Video for Acme",
+                subCards: [
+                  { name: "Siubidubi", id: "2" },
+                  { name: "Can dance dance", id: "3" },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ],
 
@@ -42,7 +77,7 @@ const INITIAL_STATE = {
   },
 };
 
-export const userAdapter = createEntityAdapter<UserStates>({
+export const userAdapter = createEntityAdapter<UserState>({
   selectId: (user) => user.id,
   sortComparer: (a, b) => a.id.localeCompare(b.id),
 });
@@ -65,9 +100,9 @@ export const UserSlice = createSlice({
     },
 
     deleteWorkspace: (state, action: DeleteWorkspaceAction) => {
-      const { name } = action.payload;
+      const { id } = action.payload;
       const { workspaces } = state.boards;
-      const index = workspaces.findIndex((space) => name === space.name);
+      const index = workspaces.findIndex((space) => id === space.id);
 
       state.boards.workspaces = [
         ...workspaces.slice(0, index),
@@ -76,46 +111,169 @@ export const UserSlice = createSlice({
     },
 
     editWorkspace: (state, action: EditWorkspaceAction) => {
-      const { name, newName } = action.payload;
+      const { id, newName } = action.payload;
       const { workspaces } = state.boards;
 
-      const index = workspaces.findIndex((space) => name === space.name);
+      const index = workspaces.findIndex((space) => id === space.id);
       workspaces[index].name = newName;
     },
 
-    changePositionOfAWorkspace: (state, action: NotImplementedYetProps) => {
-      console.log(state);
-    },
     changeCurrentWorkspace: (state, action: ChangeCurrentWorkspaceAction) => {
       const { id } = action.payload;
       state.boards.currentWorkspace = id;
     },
+    changePositionOfAWorkspace: (state, action: NotImplementedYetProps) => {
+      console.log(state);
+    },
     //-----------------------------------------------------------
 
-    addNewList: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    addNewList: (state, action: AddNewListAction) => {
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+
+      const idsArray = availableList.map((list) => +list.id).sort();
+      const uniqueId = idsArray[idsArray.length - 1] + 1 + "";
+
+      state.boards.workspaces[+currentWorkspace].lists.push({
+        ...action.payload,
+        id: uniqueId,
+        cards: emptyCardList,
+      });
     },
-    deleteList: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    deleteList: (state, action: DeleteListAction) => {
+      const { id } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const index = availableList.findIndex((list) => id === list.id);
+
+      state.boards.workspaces[+currentWorkspace].lists = [
+        ...availableList.slice(0, index),
+        ...availableList.slice(index + 1),
+      ];
     },
-    editList: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    editList: (state, action: EditListAction) => {
+      const { id, newName } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const index = availableList.findIndex((list) => id === list.id);
+
+      workspaces[+currentWorkspace].lists[index].name = newName;
     },
     changePositionOfAList: (state, action: NotImplementedYetProps) => {
       console.log(state);
     },
     //-----------------------------------------------------------
 
-    addNewCard: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    addNewCard: (state, action: AddNewCardAction) => {
+      const { listId, name } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+
+      const idsArray = availableCardList.map((list) => +list.id).sort();
+      const uniqueId = idsArray[idsArray.length - 1] + 1 + "";
+
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards.push({
+        id: uniqueId,
+        name,
+        subCards: emptySubCardList,
+      });
     },
-    deleteCard: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    deleteCard: (state, action: DeleteCardAction) => {
+      const { listId, id } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+      const index = availableCardList.findIndex(
+        (cardList) => id === cardList.id
+      );
+
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards = [
+        ...availableCardList.slice(0, index),
+        ...availableCardList.slice(index + 1),
+      ];
     },
-    editCard: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    editCard: (state, action: EditCardAction) => {
+      const { listId, id, newName } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+      const index = availableCardList.findIndex(
+        (cardList) => id === cardList.id
+      );
+
+      workspaces[+currentWorkspace].lists[listIndex].cards[index].name =
+        newName;
     },
     changePositionOfACard: (state, action: NotImplementedYetProps) => {
+      console.log(state);
+    },
+    //-----------------------------------------------------------
+
+    addNewSubCard: (state, action: AddNewSubCardAction) => {
+      const { listId, cardId, name } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+      const cardIndex = availableCardList.findIndex(
+        (cardList) => cardId === cardList.id
+      );
+      const availableSubCardList = availableCardList[cardIndex].subCards;
+
+      const idsArray = availableSubCardList.map((list) => +list.id).sort();
+      const uniqueId = idsArray[idsArray.length - 1] + 1 + "";
+
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards[
+        cardIndex
+      ].subCards.push({
+        id: uniqueId,
+        name,
+      });
+    },
+    deleteSubCard: (state, action: DeleteSubCardAction) => {
+      const { listId, cardId, id } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+      const cardIndex = availableCardList.findIndex(
+        (cardList) => cardId === cardList.id
+      );
+      const availableSubCardList = availableCardList[cardIndex].subCards;
+      const index = availableSubCardList.findIndex(
+        (cardList) => id === cardList.id
+      );
+
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards[
+        cardIndex
+      ].subCards = [
+        ...availableSubCardList.slice(0, index),
+        ...availableSubCardList.slice(index + 1),
+      ];
+    },
+    editSubCard: (state, action: EditSubCardAction) => {
+      const { listId, cardId, id, newName } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+      const cardIndex = availableCardList.findIndex(
+        (cardList) => cardId === cardList.id
+      );
+      const availableSubCardList = availableCardList[cardIndex].subCards;
+      const index = availableSubCardList.findIndex(
+        (cardList) => id === cardList.id
+      );
+
+      workspaces[+currentWorkspace].lists[listIndex].cards[cardIndex].subCards[
+        index
+      ].name = newName;
+    },
+    changePositionOfASubCard: (state, action: NotImplementedYetProps) => {
       console.log(state);
     },
   },
@@ -139,6 +297,12 @@ export const {
   deleteCard,
   editCard,
   changePositionOfACard,
+  //-----------------------------------------------------------
+
+  addNewSubCard,
+  deleteSubCard,
+  editSubCard,
+  changePositionOfASubCard,
 } = UserSlice.actions;
 
 export const userReducer = UserSlice.reducer;

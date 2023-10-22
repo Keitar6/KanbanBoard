@@ -1,71 +1,38 @@
 import * as Styled from "./WorkspaceSection.styled";
 import Typography from "../Typography";
 import Icon from "../Icon";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import WorkspaceTile from "../WorkspaceTile";
-import {
-  addNewWorkspace,
-  changeCurrentWorkspace,
-  selectUserWorkspaces,
-} from "../../store/reducers/user_slice";
-import { IconName } from "../Icon/icon.types";
-import CustomButton, { BaseButtonProps } from "../Button";
-import { useState } from "react";
-import {
-  IconInfos,
-  Workspace,
-} from "@store/reducers/user_slice/user_slice.types";
-import WorkspaceTileTemplate from "../WorkspaceTileTemplate";
+import CustomButton from "../Button";
+import { IconInfos } from "@store/reducers/user_slice/user_slice.types";
+import WorkspaceTileTemplate from "../Templates/WorkspaceTileTemplate";
+import useWorkspace from "../../utils/hooks/useWorkspace";
 
 const WorkspaceSection = () => {
-  const dispatch = useAppDispatch();
-  const workspaces = useAppSelector(selectUserWorkspaces);
-  const [buttonState, setButtonState] = useState<BaseButtonProps>({
-    type: "basic",
-    inactive: false,
-  });
-  const [isWorkspaceBeingCreated, setIsWorkspaceBeingCreated] =
-    useState<boolean>(false);
-  const [newWorkspaceName, setNewWorkspaceName] = useState("");
-
-  const canBeSaved = !buttonState.inactive;
-
-  const addNewWorkspaceHandler = () => {
-    if (!isWorkspaceBeingCreated) {
-      setButtonState({ type: "primary", inactive: true });
-      setIsWorkspaceBeingCreated(true);
-    } else if (isWorkspaceBeingCreated && canBeSaved) {
-      const newWorkspace: Omit<Omit<Workspace, "lists">, "id"> = {
-        name: newWorkspaceName,
-        icon: {
-          name: "defaultLogo",
-          color: "text",
-          backgroundColors: "logo_template",
-        },
-      };
-
-      dispatch(addNewWorkspace(newWorkspace));
-      setButtonState({ type: "basic", inactive: false });
-      setIsWorkspaceBeingCreated(false);
-    }
-  };
-
-  const getCurrentName = (name: string) => {
-    if (name) {
-      setButtonState({ type: "primary", inactive: false });
-      setNewWorkspaceName(name);
-    } else setButtonState({ type: "primary", inactive: true });
-  };
+  const {
+    workspaces,
+    currentWorkspace,
+    changeWorkspaceHandler,
+    addNewWorkspaceHandler,
+    isWorkspaceBeingCreated,
+    getCurrentName,
+    buttonState,
+  } = useWorkspace();
 
   return (
     <Styled.WorkspacesContainer>
       {workspaces.map((workspace) => {
         const { name, id, icon } = workspace;
+        const isCurrent = id === currentWorkspace?.id ? true : false;
+
         return (
           <WorkspaceTile
-            key={name}
+            key={id}
             workspace={{ name, id, icon: icon as IconInfos }}
             isCreated={isWorkspaceBeingCreated}
+            isCurrent={isCurrent}
+            onClick={() =>
+              changeWorkspaceHandler({ workspaceId: id, condition: !isCurrent })
+            }
           />
         );
       })}

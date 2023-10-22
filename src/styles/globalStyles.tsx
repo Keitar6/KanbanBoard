@@ -39,12 +39,3 @@ ol, ul, li {
 
 export default GlobalStyle;
 
-export const CardDropshadow = css`
-  box-shadow: 0px 0px 1px 0px ${({ theme }) => theme.palette.tiles_hover}1a,
-    0px 1px 1px 0px ${({ theme }) => theme.palette.tiles_hover}1a;
-`;
-export const CardDropshadowHover = css`
-  box-shadow: 0px 0px 1px 0px ${({ theme }) => theme.palette.tiles_hover}1c,
-    0px 1px 1px 0px 0px 3px 5px 0px
-      ${({ theme }) => theme.palette.tiles_hover}1a;
-`;

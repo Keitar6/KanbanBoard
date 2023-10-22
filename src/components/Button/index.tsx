@@ -7,9 +7,9 @@ const Button = styled.button<CustomButtonProps>`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 0.5rem 0.75rem 0.5rem 0.625rem;
-  border-radius: 0.25rem;
-  gap: 0.375rem;
+  padding: 8px 12px 8px 10px;
+  border-radius: 4px;
+  gap: 6px;
   transition: background-color 0.3s, color 0.3s;
 
   ${({ theme, type }) =>

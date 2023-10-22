@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
 
 export const SidebarDropShadow = css`
   box-shadow: 0px 0px 0px 0px ${({ theme }) => theme.palette.tiles_hover}1a,
