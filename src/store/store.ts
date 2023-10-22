@@ -8,7 +8,16 @@ import loggerMiddleware from "redux-logger";
 
 import { userReducer } from "./reducers/user_slice";
 import { errorReducer } from "./reducers/error_slice";
-import { persistStore, persistReducer } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage"; // or another storage engine
 
 export const rootReducer = combineReducers({
@@ -18,7 +27,12 @@ export const rootReducer = combineReducers({
 
 export const rootMiddleware = (
   getDefaultMiddleware: CurriedGetDefaultMiddleware
-) => getDefaultMiddleware().concat(loggerMiddleware);
+) =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }).concat(loggerMiddleware);
 
 const persistConfig = {
   key: "root",
