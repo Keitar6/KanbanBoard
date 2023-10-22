@@ -8,12 +8,14 @@ import * as Styled from "./Input.styled";
 type EditableTextInputProps = {
   isHovered?: boolean;
   isCreating?: boolean;
+  ifSubCard?: boolean;
   typographyVariant?: TypographyName;
   name: string;
   placeholder?: string;
   getCurrentName?: (name: string) => void;
   onDelete?: (id?: string) => void;
   onSave?: () => void;
+  onSubCardAddition?: () => void;
 };
 
 function EditableTextInput({
@@ -25,6 +27,9 @@ function EditableTextInput({
   getCurrentName = () => {},
   onDelete = () => {},
   onSave = () => {},
+
+  ifSubCard = false,
+  onSubCardAddition = () => {},
 }: EditableTextInputProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(name);
@@ -98,6 +103,17 @@ function EditableTextInput({
 
           {isHovered ? (
             <Styled.IconsOnHover>
+              {ifSubCard ? (
+                <Styled.StyledButton onClick={onSubCardAddition}>
+                  <Icon
+                    size={16}
+                    name={"plus"}
+                    color={"text"}
+                    isActive={false}
+                  />
+                </Styled.StyledButton>
+              ) : null}
+
               <Styled.StyledButton onClick={editClickHandler}>
                 <Icon size={16} name={"edit"} color={"text"} isActive={false} />
               </Styled.StyledButton>

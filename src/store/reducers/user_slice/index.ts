@@ -13,6 +13,7 @@ import {
   ChangeCurrentWorkspaceAction,
   ChangePositionOfACardAction,
   ChangePositionOfAListAction,
+  ChangePositionOfASubCardAction,
   ChangePositionOfAWorkspaceAction,
   DeleteCardAction,
   DeleteListAction,
@@ -287,12 +288,26 @@ export const UserSlice = createSlice({
         (cardList) => id === cardList.id
       );
 
-      workspaces[+currentWorkspace].lists[listIndex].cards[cardIndex].subCards[
-        index
-      ].name = newName;
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards[
+        cardIndex
+      ].subCards[index].name = newName;
     },
-    changePositionOfASubCard: (state, action: NotImplementedYetProps) => {
-      console.log(state);
+    changePositionOfASubCard: (
+      state,
+      action: ChangePositionOfASubCardAction
+    ) => {
+      const { listId, cardId, reorderdSubCardList } = action.payload;
+      const { currentWorkspace, workspaces } = state.boards;
+      const availableList = workspaces[+currentWorkspace].lists;
+      const listIndex = availableList.findIndex((list) => listId === list.id);
+      const availableCardList = availableList[listIndex].cards;
+      const cardIndex = availableCardList.findIndex(
+        (cardList) => cardId === cardList.id
+      );
+
+      state.boards.workspaces[+currentWorkspace].lists[listIndex].cards[
+        cardIndex
+      ].subCards = reorderdSubCardList;
     },
   },
 });

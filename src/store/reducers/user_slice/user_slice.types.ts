@@ -82,6 +82,10 @@ export type EditCardAction = PayloadAction<{
   id: string;
   newName: string;
 }>;
+export type ChangePositionOfACardAction = PayloadAction<{
+  reorderdCardList: Card[];
+  listId: string;
+}>;
 
 export type AddNewSubCardAction = PayloadAction<{
   listId: string;
@@ -100,9 +104,10 @@ export type EditSubCardAction = PayloadAction<{
   newName: string;
 }>;
 
-export type ChangePositionOfACardAction = PayloadAction<{
-  reorderdCardList: Card[];
+export type ChangePositionOfASubCardAction = PayloadAction<{
+  reorderdSubCardList: SubCard[];
   listId: string;
+  cardId: string;
 }>;
 
 export type NotImplementedYetProps = any;

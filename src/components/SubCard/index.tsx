@@ -1,41 +1,50 @@
 import * as Styled from "./SubCard.styled";
 import EditableTextInput from "../Input";
-import useOnHover from "../../utils/hooks/useOnHover";
-import { useState } from "react";
-import { useAppDispatch } from "../../store/hooks";
-import { deleteSubCard, editSubCard } from "../../store/reducers/user_slice";
+import useSubCard from "../../utils/hooks/useSubCard";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 const SubCard = ({
   listId,
   cardId,
   id,
   name,
+  addSubCardHandler = () => {},
 }: {
   name: string;
   listId: string;
   cardId: string;
   id: string;
+  addSubCardHandler?: () => void;
 }) => {
-  const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();
+  const {
+    isHovered,
+    mouseEnterHandler,
+    mouseLeaveHandler,
+    onSaveHandler,
+    onDeleteHandler,
+    getCurrentName,
+  } = useSubCard({
+    listId,
+    cardId,
+    id,
+  });
 
-  const [inputText, setInputText] = useState("");
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
 
-  const dispatch = useAppDispatch();
-
-  const getCurrentName = (name: string) => {
-    setInputText(name);
-  };
-
-  const onSaveHandler = () => {
-    dispatch(editSubCard({ listId, cardId, id, newName: inputText }));
-  };
-
-  const onDeleteHandler = () => {
-    dispatch(deleteSubCard({ listId, id, cardId }));
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
   };
 
   return (
-    <Styled.SubCardWrapper>
+    <Styled.SubCardWrapper
+      style={style}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+    >
       <Styled.SubCardContainer
         onMouseEnter={mouseEnterHandler}
         onMouseLeave={mouseLeaveHandler}
@@ -47,6 +56,8 @@ const SubCard = ({
           isHovered={isHovered}
           onDelete={onDeleteHandler}
           onSave={onSaveHandler}
+          ifSubCard
+          onSubCardAddition={addSubCardHandler}
         />
       </Styled.SubCardContainer>
     </Styled.SubCardWrapper>

@@ -3,7 +3,10 @@ import Typography from "../Typography";
 import Icon from "../Icon";
 import WorkspaceTile from "../WorkspaceTile";
 import CustomButton from "../Button";
-import { IconInfos, Workspace } from "@store/reducers/user_slice/user_slice.types";
+import {
+  IconInfos,
+  Workspace,
+} from "@store/reducers/user_slice/user_slice.types";
 import { useAppDispatch } from "../../store/hooks";
 import { changePositionOfAWorkspace } from "../../store/reducers/user_slice";
 import WorkspaceTileTemplate from "../Templates/WorkspaceTileTemplate";
