@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useOnHover = () => {
+export const useOnHover = () => {
   const [isHovered, setIsHovered] = useState(false);
   const mouseEnterHandler = () => {
     setIsHovered(true);

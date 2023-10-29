@@ -1,6 +1,6 @@
 import * as Styled from "./CardTemplate";
-import EditableTextInput from "../../Input";
-import { TypographyName } from "../../../styles/theme.types";
+import EditableTextInput from "@components/atoms/Input";
+import { TypographyName } from "@styles/theme.types";
 
 type CardTemplateProps = {
   isCreating: boolean;

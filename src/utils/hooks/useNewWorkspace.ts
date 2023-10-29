@@ -1,15 +1,15 @@
-import { BaseButtonProps } from "@components/Button";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useState } from "react";
+import { BaseButtonProps } from "@components/atoms/Button";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import {
   addNewWorkspace,
   changeCurrentWorkspace,
   selectUserCurrentWorkspace,
   selectUserWorkspaces,
-} from "../../store/reducers/user_slice";
-import { useState } from "react";
+} from "@store/reducers/user_slice";
 import defaultNewWorkspace from "../constans/defaultNewWorkspace";
 
-const useNewWorkspace = () => {
+export const useNewWorkspace = () => {
   const dispatch = useAppDispatch();
   const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
   const workspaces = useAppSelector(selectUserWorkspaces);

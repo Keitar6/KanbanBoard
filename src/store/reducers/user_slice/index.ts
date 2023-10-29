@@ -25,7 +25,7 @@ import {
   EditWorkspaceAction,
 } from "./user_slice.types";
 import { UserState } from "./user_slice.types";
-import JohnDoeImage from "../../../assets/photos/JohnDoeAvatar.png";
+import JohnDoeImage from "@assets/photos/JohnDoeAvatar.png";
 
 const INITIAL_STATE: UserState = {
   id: "1",

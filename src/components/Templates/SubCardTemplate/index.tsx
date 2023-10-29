@@ -1,6 +1,6 @@
 import * as Styled from "./SubCardTemplate";
-import EditableTextInput from "../../Input";
-import { TypographyName } from "../../../styles/theme.types";
+import EditableTextInput from "@components/atoms/Input";
+import { TypographyName } from "@styles/theme.types";
 
 type SubCardTemplateProps = {
   isCreating: boolean;

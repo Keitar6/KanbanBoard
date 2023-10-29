@@ -1,4 +1,4 @@
-import { Workspace } from "../../store/reducers/user_slice/user_slice.types";
+import { Workspace } from "@store/reducers/user_slice/user_slice.types";
 
 const defaultNewWorkspace = (
   name: string

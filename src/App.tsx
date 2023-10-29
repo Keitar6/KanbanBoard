@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import Sidebar from "./components/Sidebar";
-
+import { useSelector } from "react-redux";
 import GlobalStyle from "./styles/globalStyles";
 import { Routing } from "./routing";
-import ErrorPage from "./components/pages/Error";
-import { useSelector } from "react-redux";
+import ErrorPage from "./pages/Error";
 import { selectError } from "./store/reducers/error_slice";
+import Sidebar from "./components/organisms/Sidebar";
 
 const Layout = styled.div`
   height: 100%;

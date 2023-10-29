@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ErrorState } from "../../../utils/errorBoundary";
+import { ErrorState } from "@utils/errorBoundary";
 
 const INITIAL_STATE: ErrorState = { message: null };
 

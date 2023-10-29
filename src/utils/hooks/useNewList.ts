@@ -1,12 +1,12 @@
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import {
   addNewList,
   selectUserCurrentWorkspace,
-} from "../../store/reducers/user_slice";
-import { List } from "../../store/reducers/user_slice/user_slice.types";
-import { useState } from "react";
+} from "@store/reducers/user_slice";
+import { List } from "@store/reducers/user_slice/user_slice.types";
 
-const useNewList = () => {
+export const useNewList = () => {
   const dispatch = useAppDispatch();
   const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
 

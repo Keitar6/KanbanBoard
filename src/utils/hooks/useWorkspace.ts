@@ -1,11 +1,11 @@
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch } from "@store/hooks";
 import {
   changeCurrentWorkspace,
   deleteWorkspace,
-} from "../../store/reducers/user_slice";
+} from "@store/reducers/user_slice";
 import useOnHover from "./useOnHover";
 
-const useWorkspace = (id: string) => {
+export const useWorkspace = (id: string) => {
   const dispatch = useAppDispatch();
 
   const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();

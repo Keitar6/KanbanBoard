@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import routes from "./routes";
-import Boards from "src/components/pages/Boards";
-import NotReadyYet from "src/components/pages/NotReadytYet";
+import Boards from "../pages/Boards";
+import NotReadyYet from "../pages/NotReadytYet";
 
 export const Routing = () => (
   <Routes>

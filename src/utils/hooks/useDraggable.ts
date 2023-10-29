@@ -14,13 +14,13 @@ import {
   verticalListSortingStrategy,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "@store/hooks";
 import {
   selectUserCurrentWorkspace,
   // selectUserWorkspaces,
-} from "../../store/reducers/user_slice";
+} from "@store/reducers/user_slice";
 
-const useDraggable = () => {
+export const useDraggable = () => {
   const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
   // const workspaces = useAppSelector(selectUserWorkspaces);
 

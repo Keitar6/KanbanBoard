@@ -1,15 +1,15 @@
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import {
   addNewCard,
   deleteCard,
   editCard,
   selectUserCurrentWorkspace,
   selectUserWorkspaces,
-} from "../../store/reducers/user_slice";
-import { useState } from "react";
+} from "@store/reducers/user_slice";
 import useOnHover from "./useOnHover";
 
-const useCard = (listId: string) => {
+export const useCard = (listId: string) => {
   const dispatch = useAppDispatch();
   const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
   const workspaces = useAppSelector(selectUserWorkspaces);

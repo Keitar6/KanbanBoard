@@ -1,8 +1,8 @@
-import { useAppDispatch } from "../../store/hooks";
-import { addNewSubCard } from "../../store/reducers/user_slice";
 import { useState } from "react";
+import { useAppDispatch } from "@store/hooks";
+import { addNewSubCard } from "@store/reducers/user_slice";
 
-const useNewSubCard = ({
+export const useNewSubCard = ({
   listId,
   cardId,
   id,

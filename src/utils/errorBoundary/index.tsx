@@ -1,5 +1,5 @@
 import React, { Component, PropsWithChildren, ReactNode } from "react";
-import ErrorPage from "src/components/pages/Error";
+import ErrorPage from "../../pages/Error";
 
 export type ErrorState = {
   message: string | null;

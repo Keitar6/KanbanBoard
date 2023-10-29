@@ -1,15 +1,15 @@
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import {
   addNewCard,
   deleteSubCard,
   editSubCard,
   selectUserCurrentWorkspace,
   selectUserWorkspaces,
-} from "../../store/reducers/user_slice";
-import { useState } from "react";
+} from "@store/reducers/user_slice";
 import useOnHover from "./useOnHover";
 
-const useSubCard = ({
+export const useSubCard = ({
   listId,
   cardId,
   id,
@@ -22,7 +22,8 @@ const useSubCard = ({
   const currentWorkspace = useAppSelector(selectUserCurrentWorkspace);
   const workspaces = useAppSelector(selectUserWorkspaces);
 
-  const [isSubCardBeingCreated, setIsSubCardBeingCreated] = useState<boolean>(false);
+  const [isSubCardBeingCreated, setIsSubCardBeingCreated] =
+    useState<boolean>(false);
   const [newCardName, setNewCardName] = useState("");
   const { isHovered, mouseEnterHandler, mouseLeaveHandler } = useOnHover();
 

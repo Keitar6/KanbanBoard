@@ -1,5 +1,5 @@
 import * as Styled from "./WorkspaceTileTemplate.styled";
-import EditableTextInput from "../../Input";
+import EditableTextInput from "@components/atoms/Input";
 
 type WorkspaceTileProps = {
   isCreating: boolean;

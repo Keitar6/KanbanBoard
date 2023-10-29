@@ -1,12 +1,12 @@
 import { StrictMode } from "react";
-import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { persistedStore, store } from "./store/store";
-import { ThemeWrapper } from "./components/ThemeWrapper";
-import { BrowserRouter } from "react-router-dom";
-import ErrorBoundary from "./utils/errorBoundary";
 import { PersistGate } from "redux-persist/integration/react";
+import { persistedStore, store } from "@store/store";
+import { ThemeWrapper } from "@components/atoms/ThemeWrapper";
+import ErrorBoundary from "@utils/errorBoundary";
+import App from "./App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

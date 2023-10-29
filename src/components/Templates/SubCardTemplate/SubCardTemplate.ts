@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CardContainer } from "../../Card/Card.styled";
+import { CardContainer } from "@components/atoms/Card/Card.styled";
 
 export const Container = styled(CardContainer)`
   padding: 16px 8px;

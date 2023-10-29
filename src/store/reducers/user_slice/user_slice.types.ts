@@ -1,6 +1,6 @@
-import { ColorNames } from "@styles/theme.types";
-import { IconName } from "../../../components/Icon/icon.types";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { ColorNames } from "@styles/theme.types";
+import { IconName } from "@components/atoms/Icon/icon.types";
 
 export type IconInfos = {
   name: IconName;
